@@ -3,12 +3,13 @@ import os
 import random
 from menu import menu
 import serial
+import controls
 
 pygame.init()
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 
-
+SENSOR = True
 
 WIDTH = 900
 HEIGHT = 600
@@ -47,20 +48,30 @@ x_speed, y_speed = 1, 1
 # menu
 menu(SCREEN, CLOCK, FONT, BG, BALL_COLOR, P1_COLOR, P2_COLOR)
 
+if SENSOR:
+    controls.ser.reset_input_buffer()
+
 while True:
 
     keys_pressed = pygame.key.get_pressed()
 
-    if keys_pressed[pygame.K_w]:
-        if player1.top > 0: player1.top -= 3 # paddle speed 3 bhala in 120 ticks
+    if SENSOR:
+        controls.update()
+        target = (controls.distance - controls.MIN_CM) / (controls.MAX_CM - controls.MIN_CM) * (HEIGHT - player1.height)
+        player1.top += (target - player1.top) * 0.2   # 0.2 mane smooth
+
+    else:
+        if keys_pressed[pygame.K_w]:
+            if player1.top > 0: player1.top -= 3 # paddle speed 3 bhala in 120 ticks
+        if keys_pressed[pygame.K_s]:
+            if player1.bottom < HEIGHT: player1.bottom += 3
+
+
     if keys_pressed[pygame.K_UP]:
         if player2.top > 0: player2.top -= 3
-    
-
-    if keys_pressed[pygame.K_s]:
-        if player1.bottom < HEIGHT: player1.bottom += 3
     if keys_pressed[pygame.K_DOWN]:
         if player2.bottom < HEIGHT: player2.bottom += 3
+
 
 
     # ball boundary
@@ -133,4 +144,4 @@ while True:
     pygame.draw.rect(SCREEN, "white", SCREEN.get_rect(), 4)
 
     pygame.display.update()
-    CLOCK.tick(120)
+    CLOCK.tick(90)
