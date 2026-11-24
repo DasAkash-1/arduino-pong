@@ -53,14 +53,14 @@ if SENSOR:
 
 while True:
 
-    keys_pressed = pygame.key.get_pressed()
+    keys_pressed = pygame.key.get_pressed() 
 
     if SENSOR:
         controls.update()
-        print(controls.distance1, controls.distance2)
+        print(controls.disL, controls.disR)
 
-        target1 = (controls.distance1 - controls.mn) / (controls.mx - controls.mn) * (HEIGHT - player1.height)
-        target2 = (controls.distance2 - controls.mn) / (controls.mx - controls.mn) * (HEIGHT - player2.height)
+        target1 = (controls.disL - controls.mn) / (controls.mx - controls.mn) * (HEIGHT - player1.height)
+        target2 = (controls.disR - controls.mn) / (controls.mx - controls.mn) * (HEIGHT - player2.height)
 
         player1.top += (target1 - player1.top) * 0.2   # 0.2 smooth
         player2.top += (target2 - player2.top) * 0.2
