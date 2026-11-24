@@ -7,9 +7,9 @@ ser = serial.Serial("/dev/cu.usbmodem11401", 9600, timeout=0)
 mn = 5  # mn = 5, mx = 17 best, ager(3, 15)
 mx = 17
 
-buf = ""          # adha line gulo ekhane jomabe
-history = []      # last kothok ta reading ekhane thakbe
-distance = 15     # filter howa distance (cm)
+buf = ""
+history = []
+distance = 15
 
 
 def update():
