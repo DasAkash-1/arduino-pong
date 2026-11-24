@@ -57,8 +57,13 @@ while True:
 
     if SENSOR:
         controls.update()
-        target = (controls.distance - controls.MIN_CM) / (controls.MAX_CM - controls.MIN_CM) * (HEIGHT - player1.height)
-        player1.top += (target - player1.top) * 0.2   # 0.2 mane smooth
+        print(controls.distance1, controls.distance2)
+
+        target1 = (controls.distance1 - controls.mn) / (controls.mx - controls.mn) * (HEIGHT - player1.height)
+        target2 = (controls.distance2 - controls.mn) / (controls.mx - controls.mn) * (HEIGHT - player2.height)
+
+        player1.top += (target1 - player1.top) * 0.2   # 0.2 smooth
+        player2.top += (target2 - player2.top) * 0.2
 
     else:
         if keys_pressed[pygame.K_w]:
@@ -67,10 +72,10 @@ while True:
             if player1.bottom < HEIGHT: player1.bottom += 3
 
 
-    if keys_pressed[pygame.K_UP]:
-        if player2.top > 0: player2.top -= 3
-    if keys_pressed[pygame.K_DOWN]:
-        if player2.bottom < HEIGHT: player2.bottom += 3
+        if keys_pressed[pygame.K_UP]:
+            if player2.top > 0: player2.top -= 3
+        if keys_pressed[pygame.K_DOWN]:
+            if player2.bottom < HEIGHT: player2.bottom += 3
 
 
 
@@ -144,4 +149,4 @@ while True:
     pygame.draw.rect(SCREEN, "white", SCREEN.get_rect(), 4)
 
     pygame.display.update()
-    CLOCK.tick(90)
+    CLOCK.tick(60)
